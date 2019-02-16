@@ -27,19 +27,19 @@ Route::post('/login','UserController@doLoginProcess');
 Route::get('/user','UserController@index');
 Route::get('/user/new','UserController@showRegistrationForm');
 Route::post('/user/store','UserController@doSaveProcess');
+Route::get('/user/data', 'UserController@getAllUserData');
 Route::get('/user/{username}/update','UserController@showUpdateForm');
 Route::post('/user/{username}/update','UserController@doUpdateProcess');
 Route::get('/user/{username}','UserController@showUserInformation');
 Route::post('user/{username}/toggle', 'UserController@toggleStatus'); // enabled / disabled
-Route::get('/user/data', 'UserController@getAllUserData');
 
 Route::get('/dorm','DormController@index');
 Route::get('/dorm/new','DormController@showCreateForm');
-Route::post('/dorm/store','UserController@doSaveProcess');
+Route::post('/dorm/store','DormController@doSaveProcess');
 Route::get('/dorm/data', 'DormController@getAllDormData');
+Route::get('/dorm/view/{dormname}','DormController@showDormInformation');
 Route::get('/dorm/{dormname}/update','DormController@showUpdateForm');
 Route::post('/dorm/{dormname}/update','DormController@doUpdateProcess');
-Route::get('/dorm/{dormname}','DormController@showDormInformation');
 Route::post('dorm/{dormname}/toggle', 'DormController@toggleStatus'); // enabled / disabled
 
 Route::get('/room','RoomController@index');

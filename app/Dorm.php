@@ -34,6 +34,7 @@ class Dorm extends Model
         'Latitude',
         'Longitude',
         'Rate',
+        'Rooms',
         'MobileNumber',
         'LandLineNumber',
         'Owner',

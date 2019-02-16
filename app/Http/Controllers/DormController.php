@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Dorm;
+use App\User;
 use Illuminate\Http\Request;
 
 class DormController extends Controller
@@ -35,7 +36,30 @@ class DormController extends Controller
      */
     public function doSaveProcess(Request $request)
     {
-        //
+        $user = new User();
+        $user->Username = User::GenerateUsernameForDormitoryUser($request->Name);
+        $user->Password = "1234";
+        $user->EmailAddress = "default@email.com";
+        $user->Name = $request->Owner;
+        $user->save();
+
+        $dorm = new Dorm();
+        $dorm->Name = $request->Name;
+        $dorm->Owner = $user->ID;
+        $dorm->AddressLine1 = $request->AddressLine1;
+        $dorm->AddressLine2 = $request->AddressLine2;
+        $dorm->City = $request->City;
+        $dorm->Zip = $request->Zip;
+        $dorm->Rate = $request->Rate;
+        $dorm->Rooms = $request->Rooms;
+        $dorm->MobileNumber = $request->MobileNumber;
+        $dorm->LandLineNumber = $request->LandLineNumber;
+        $dorm->BusinessPermit = $request->BusinessPermit;
+        $dorm->Latitude = $request->Latitude;
+        $dorm->Longitude = $request->Longitude;
+        $dorm->save();
+
+        return redirect()->to('/dorm');
     }
 
     /**
@@ -93,28 +117,17 @@ class DormController extends Controller
     {
         $data = array();
         $dorms = Dorm::all();
-
-
         foreach($dorms as $dorm) {
             $entry = array();
             $entry['ID'] = $dorm->ID;
             $entry['Name'] = $dorm->Name;
-            $entry['Owner'] = $dorm->getOwner()->getFullName();
+            $entry['Owner'] = $dorm->getOwner()->Name;
             $entry['Address'] = sprintf("%s, %s, %s", $dorm->AddressLine1, $dorm->AddressLine2, $dorm->City);
             $entry['Mobile'] = $dorm->MobileNumber;
-            $entry['LandLine'] = $dorm->LandLineNumber;
+            $entry['Rooms'] = $dorm->Rooms;
 
             array_push($data, $entry);
         }
-
-
-//        <th class="sorting_asc">Name</th>
-//        <th class="sorting">Owner</th>
-//        <th class="sorting">Address</th>
-//        <th class="sorting">Mobile #</th>
-//        <th class="sorting">Landline #</th>
-//        <th class="sorting"># of Rooms</th>
-//        <th class="disabled-sorting">Actions</th>
         return response()->json(['aaData'=>$data]);
     }
 

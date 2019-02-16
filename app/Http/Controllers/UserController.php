@@ -91,7 +91,19 @@ class UserController extends Controller
      */
     public function getAllUserData(Request $request)
     {
-        //
+        $data = array();
+        $users = User::all();
+        foreach($users as $user) {
+            $entry = array();
+            $entry['ID'] = $user->ID;
+            $entry['Name'] = $user->Name;
+            $entry['Username'] = $user->Username;
+            $entry['Dormitory'] = $user->getDormitory()!=null?$user->getDormitory()->Name:"N/A";
+            $entry['EmailAddress'] = $user->EmailAddress;
+
+            array_push($data, $entry);
+        }
+        return response()->json(['aaData'=>$data]);
     }
 
     /**

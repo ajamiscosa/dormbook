@@ -39,7 +39,15 @@ class User extends Model
         return $this->AccessLevel == 1;
     }
 
-    public function getFullName() {
-        return sprintf("%s %s", $this->FirstName, $this->LastName);
+    public function getDormitory() {
+        return $this->hasOne('App\Dorm','Owner','ID')->first();
+    }
+
+    public static function GenerateUsernameForDormitoryUser($nameOfDorm) {
+        $nameOfDorm = preg_replace('/[^\w ]/', '', $nameOfDorm);
+        $pieces = explode(' ', $nameOfDorm);
+        $pieces = array_slice($pieces,0,2);
+        $username = join('', $pieces);
+        return strtolower(sprintf("db_$username"));
     }
 }

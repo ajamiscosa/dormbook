@@ -12,37 +12,37 @@
                     <h4 class="card-title">Dormitories List</h4>
                 </div>
                 <div class="card-body">
-                    <div class="toolbar">
-                        <!--        Here you can write extra buttons/actions for the toolbar              -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <a href="/dorm/new" class="btn btn-border ml-3">Add Dormitory</a>
+                        </div>
                     </div>
-                    <div id="datatable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <table id="dormsTable" class="table table-striped table-bordered dataTable dtr-inline" cellspacing="0" width="100%" role="grid" aria-describedby="datatable_info" style="width: 100%;">
-                                    <thead>
-                                        <tr role="row">
-                                            <th class="sorting_asc">Name</th>
-                                            <th class="sorting">Owner</th>
-                                            <th class="sorting">Address</th>
-                                            <th class="sorting">Mobile #</th>
-                                            <th class="sorting">Landline #</th>
-                                            <th class="disabled-sorting">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr role="row">
-                                            <th class="sorting_asc">Name</th>
-                                            <th class="sorting">Owner</th>
-                                            <th class="sorting">Address</th>
-                                            <th class="sorting">Mobile #</th>
-                                            <th class="sorting">Landline #</th>
-                                            <th class="disabled-sorting">Actions</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table id="dormsTable" class="table table-striped table-bordered dataTable dtr-inline" cellspacing="0" width="100%" role="grid" aria-describedby="datatable_info" style="width: 100%;">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc">Name</th>
+                                    <th class="sorting">Owner</th>
+                                    <th class="sorting">Address</th>
+                                    <th class="sorting">Mobile #</th>
+                                    <th class="sorting"># of Rooms</th>
+                                    <th class="disabled-sorting text-right">Actions</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr role="row">
+                                    <th class="sorting_asc">Name</th>
+                                    <th class="sorting">Owner</th>
+                                    <th class="sorting">Address</th>
+                                    <th class="sorting">Mobile #</th>
+                                    <th class="sorting"># of Rooms</th>
+                                    <th class="disabled-sorting text-right">Actions</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -68,8 +68,8 @@
                 { data:"Owner" },
                 { data:"Address" },
                 { data:"Mobile" },
-                { data:"LandLine" },
-                { data: null }
+                { data:"Rooms" },
+                { data: null, class:'text-right' }
             ],
             columnDefs: [
                 {
@@ -80,6 +80,15 @@
                     },
                     targets: 0
 
+                },
+                {
+                    render: function (data, type, row) {
+                        var ID = row['ID'];
+                        var Name = row['Name'].split(' ').join('-');
+                        return '<a href="/dorm/update/'+ID+'-'+Name+'" class="btn btn-warning btn-link btn-icon btn-sm edit"><i class="fa fa-edit"></i></a>' +
+                            '<a href="/dorm/delete/'+ID+'-'+Name+'" class="btn btn-danger btn-link btn-icon btn-sm remove"><i class="fa fa-times"></i></a>';
+                    },
+                    targets: 5
                 }
             ],
             pagingType: "full_numbers",
