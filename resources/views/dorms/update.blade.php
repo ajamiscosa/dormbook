@@ -161,7 +161,7 @@
                 <div class="card-body ">
 
                         <div class="file-loading">
-                            <input id="file-0c" class="file" type="file" name="Images[]" multiple data-theme="explorer-fas">
+                            <input id="file-0c" class="file" type="file" name="filename[]" multiple data-theme="explorer-fas">
 
                         </div>
                         <input type="submit" value="Submit"/>
@@ -189,7 +189,6 @@
             'allowedFileExtensions': ['jpg', 'png', 'bmp'],
             'elErrorContainer': '#errorBlock',
             showUpload: false
-            {{--'uploadUrl': '/dorm/images/{{ $data->ID }}/upload'--}}
         });
     </script>
     <script>

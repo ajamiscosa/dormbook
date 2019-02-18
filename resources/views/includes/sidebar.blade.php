@@ -68,12 +68,6 @@
                         <p>User Accounts</p>
                     </a>
                 </li>
-                <li class="nav-item" id="setting">
-                    <a href="/setting">
-                        <i class="nc-icon nc-settings"></i>
-                        <p>Settings</p>
-                    </a>
-                </li>
             @endif
         </ul>
         <div class="ps-scrollbar-x-rail" style="width: 260px; left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 258px;"></div></div>

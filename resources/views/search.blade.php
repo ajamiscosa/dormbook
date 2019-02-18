@@ -17,9 +17,28 @@
     <link rel="stylesheet" href="{{ asset('css/leaflet-search.css') }}"/>
 
     <!-- Custom styles for this template -->
+    <style>
+
+        a {
+            color: #454F59;
+            text-decoration: none; /* no underline */
+        }
+        a:link{
+            color: #454F59;
+            text-decoration: none; /* no underline */
+        }
+        a:visited{
+            color: #000;
+            text-decoration: none; /* no underline */
+        }
+        a:hover {
+            color: #454F59;
+            text-decoration: none; /* no underline */
+        }
+    </style>
 </head>
 
-<body style=" background-color: #f4f3ef;">
+<body style=" background-color: #f4f3ef; " >
 
 <div class="container" style="width: 640px;">
     <header class="blog-header py-3">
@@ -50,12 +69,14 @@
                                        </span>
         </button>
 
-        <a href="#" class="btn btn--primary horus-btn-search pull-right" id="toggleMap">View Map
-        </a>
+        @if(isset($search))
+            <a href="#" class="btn btn--primary horus-btn-search pull-right" id="toggleMap">View Map
+            </a>
+        @endif
     </div>
     </form>
 </div>
-<main role="main" class="container" style="width: 640px;">
+<main id="main" role="main" class="container" style="width: 640px; height: auto;">
 <div id="listDiv">
 
     @if(isset($data))
@@ -84,6 +105,9 @@
     <p>
         Copyright ® 2019. dormbook
     </p>
+    <div class="col-lg-12 text-center">
+        <a href="/"><strong>Home</strong></a> | <a href="/admin"><strong>Admin</strong></a> | <a href="/about"><strong>About</strong></a>
+    </div>
 </footer>
 
 <!-- Bootstrap core JavaScript
@@ -153,8 +177,11 @@
     @if(isset($data))
         @foreach($data as $entry)
 
-        var name = '{{ $entry->Name }}';
-        console.log(name);
+        var name = '<strong>{{ $entry->Name }}</strong><br/>'+
+            '{{ $entry->AddressLine1 }}, {{ $entry->AddressLine2 }}, '+
+            '{{ $entry->City }}, Cavite<br/>{{ $entry->Rate }}<br/>' +
+            '<img src="/uploads/{{ $entry->ID }}/1.jpg" style="max-height: 100px; max-width: 100px;"/>';
+
         var marker;
         marker = L.marker([{{ $entry->Latitude }}, {{ $entry->Longitude }}]).addTo(mymap).bindPopup(name)
             .openPopup();
@@ -166,8 +193,11 @@
 $('#mapdiv').hide();
 
 $('#toggleMap').on('click', function() {
-        $('#listDiv').hide();
-        $('#mapdiv').show();
+        $('#listDiv').toggle();
+        $('#mapdiv').toggle();
+        var text = $(this).text();
+
+        $(this).text(text=="VIEW LIST"?"VIEW MAP":"VIEW LIST");
     });
 </script>
 

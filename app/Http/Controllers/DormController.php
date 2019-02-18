@@ -8,6 +8,8 @@ use App\Image;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class DormController extends Controller
 {
@@ -250,7 +252,7 @@ class DormController extends Controller
         return view('welcome');
     }
 
-    public function doUpload(Request $request) 
+    public function doUpload(Request $request, $dorm)
     {
         // $path = $request->file('avatar')->store('avatars');
 
@@ -267,7 +269,7 @@ class DormController extends Controller
             foreach($request->file('filename') as $image)
             {
                 $name=$image->getClientOriginalName();
-                $image->move(public_path().'/images/', $name);  
+                $image->move(public_path().'/uploads/'.$dorm.'/', rand(20).".".$image->getClientOriginalExtension());
                 $data[] = $name;  
             }
          }

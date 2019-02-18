@@ -30,6 +30,7 @@ Route::get('/login','UserController@showLoginForm')->name('login');
 Route::post('/login','UserController@doLoginProcess');
 
 Route::get('/logout', 'UserController@doLogoutProcess');
+Route::get('/about', 'UserController@showAboutPage');
 
 Route::get('/search','DormController@showSearchForm');
 Route::post('/search','DormController@doSearchProcess');
@@ -50,7 +51,7 @@ Route::post('/dorm/amenities','DormController@testAmenities');
 Route::get('/dorm/data', 'DormController@getAllDormData');
 Route::get('/dorm/view/{dormname}','DormController@showDormInformation');
 Route::get('/dorm/update/{dormname}','DormController@showUpdateForm');
-Route::post('/dorm/images/{dorm}/upload', 'DormController@uploadImage');
+Route::post('/dorm/images/{dorm}/upload', 'DormController@doUpload');
 Route::post('/dorm/{dorm}/update','DormController@doUpdateProcess');
 Route::post('dorm/{dormname}/toggle', 'DormController@toggleStatus'); // enabled / disabled
 

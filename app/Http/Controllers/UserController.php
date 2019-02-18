@@ -173,4 +173,8 @@ class UserController extends Controller
             return redirect()->to('/login');
         }
     }
+
+    public function showAboutPage() {
+        return view('about');
+    }
 }
