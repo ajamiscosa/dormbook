@@ -50,22 +50,36 @@
 <main role="main" class="container" style="width: 640px;">
 
 @include('includes.searchitem')
-@include('includes.searchitem')
-@include('includes.searchitem')
-@include('includes.searchitem')
-@include('includes.searchitem')
-@include('includes.searchitem')
 
 
 </main><!-- /.container -->
 
-<footer class="blog-footer">
-    <div class="col-lg-12 text-center">
-        <img src="images/dormbook.png"/>
+<footer>
+    <div class="wrap">
+        <ul>
+            <li>New York Restaurant</li>
+            <li>3926 Anmoore Road</li>
+            <li>New York, NY 10014</li>
+            <li>718-749-1714</li>
+        </ul>
+        <ul>
+            <li>France Restaurant</li>
+            <li>68, rue da le Couronne</li>
+            <li>75002 PARIS</li>
+            <li>02.94.23.69.56</li>
+        </ul>
+        <ul>
+            <li><a href="">Blog</a></li>
+            <li><a href="">Careers</a></li>
+            <li><a href="">Privacy Policy</a></li>
+            <li><a href="">Contact</a></li>
+        </ul>
+        <ul>
+            <li><img src="../images/dormbook.png" alt="logo"></li>
+            <li>&copy; All rights reserved 2015</li>
+
+        </ul>
     </div>
-    <p>
-        Copyright ® 2019. dormbook
-    </p>
 </footer>
 
 <!-- Bootstrap core JavaScript
@@ -84,6 +98,16 @@
         fg: '#eceeef',
         text: 'Thumbnail'
     });
+    //Era
+      $(document).on('click','.collapsed', function(){
+        var collapseItem = $(this).attr('rel');
+        $('.nav-tabs').find('a').each(function() {
+            $(this).removeClass('active');
+            if($(this).attr('href') == collapseItem){
+              $(this).tab('show');
+            }
+        });
+      });
 </script>
 
 
