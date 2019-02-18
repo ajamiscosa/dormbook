@@ -1,5 +1,5 @@
 @extends('app')
-@section('title','Add New Dormitory')
+@section('title',"Update Dormitory | {$data->Name} | dormbook")
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/leaflet.css') }}"/>
 <link rel="stylesheet" href="{{ asset('css/leaflet-search.css') }}"/>
@@ -12,35 +12,35 @@
     </style>
 @endsection
 @section('content')
-    <form method="POST" action="/dorm/store">
+    <form method="POST" action="/dorm/{{$data->ID}}/update">
 <div class="row">
 
     <div class="col-md-6">
         <div class="card ">
             <div class="card-header ">
-                <h4 class="card-title">Add New Dormitory</h4>
+                <h4 class="card-title">Update Dormitory Information</h4>
             </div>
             <div class="card-body ">
                     {{ csrf_field() }}
                     <label>Name</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Name" name="Name" id="dormName" required>
+                        <input type="text" class="form-control" placeholder="Name" name="Name" id="dormName" required value="{{ $data->Name }}" readonly>
                     </div>
                     <label>Name of Owner</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Owner" name="Owner" required>
+                        <input type="text" class="form-control" placeholder="Owner" name="Owner" required value="{{ $data->getOwner()->Name }}" readonly>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <label>Address Line 1</label>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Address Line 1" name="AddressLine1" required>
+                                <input type="text" class="form-control" placeholder="Address Line 1" name="AddressLine1" required value="{{ $data->AddressLine1 }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <label>Address Line 2</label>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Address Line 2" name="AddressLine2">
+                                <input type="text" class="form-control" placeholder="Address Line 2" name="AddressLine2" value="{{ $data->AddressLine2 }}">
                             </div>
                         </div>
                     </div>
@@ -48,13 +48,13 @@
                         <div class="col-lg-6">
                             <label>City</label>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="City" name="City" required>
+                                <input type="text" class="form-control" placeholder="City" name="City" required value="{{ $data->City }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <label>Zip</label>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Zip" name="Zip" required>
+                                <input type="text" class="form-control" placeholder="Zip" name="Zip" required  value="{{ $data->Zip }}">
                             </div>
                         </div>
                     </div>
@@ -63,13 +63,13 @@
                         <div class="col-lg-6">
                             <label>Latitude</label>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Latitude" id="Latitude" name="Latitude" required>
+                                <input type="text" class="form-control" placeholder="Latitude" id="Latitude" name="Latitude" required value="{{ $data->Latitude }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <label>Longitude</label>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Longitude" id="Longitude" name="Longitude" required>
+                                <input type="text" class="form-control" placeholder="Longitude" id="Longitude" name="Longitude" required value="{{ $data->Longitude }}">
                             </div>
                         </div>
                     </div>
@@ -88,26 +88,26 @@
                     <hr/>
                     <label>Monthly Rate</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Monthly Rate" name="Rate" required>
+                        <input type="text" class="form-control" placeholder="Monthly Rate" name="Rate" required value="{{ $data->Rate }}">
                     </div>
                     <hr/>
                     <label># of Rooms</label>
                     <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Number of Rooms" name="Rooms" required step="1">
+                        <input type="number" class="form-control" placeholder="Number of Rooms" name="Rooms" required step="1" value="{{ $data->Rooms }}">
                     </div>
                     <hr/>
                     <label>Mobile Number</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Mobile Number" name="MobileNumber" required>
+                        <input type="text" class="form-control" placeholder="Mobile Number" name="MobileNumber" required value="{{ $data->MobileNumber }}">
                     </div>
                     <label>LandLine Number</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="LandLine Number" name="LandLineNumber">
+                        <input type="text" class="form-control" placeholder="LandLine Number" name="LandLineNumber" value="{{ $data->LandLineNumber }}">
                     </div>
                     <hr/>
                     <label>Business Permit ID</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Business ID" name="BusinessPermit" required>
+                        <input type="text" class="form-control" placeholder="Business ID" name="BusinessPermit" required value="{{ $data->BusinessPermit }}">
                     </div>
             </div>
             <div class="card-footer ">
@@ -117,6 +117,9 @@
     </div>
 
 
+    @php
+        $amenities = json_decode($data->Amenities);
+    @endphp
     <div class="col-md-6">
         <div class="card ">
             <div class="card-header ">
@@ -127,7 +130,7 @@
                     @foreach(\App\Facility::all() as $facility)
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input name="Amenities[]" class="form-check-input" type="checkbox" value="{{ $facility->ID }}">
+                                <input name="Amenities[]" class="form-check-input" type="checkbox" value="{{ $facility->ID }}" {{ in_array($facility->ID, $amenities, true)?"checked":"" }}>
                                 <span class="form-check-sign"></span>
                                 {{ $facility->Description }}
                             </label>
@@ -149,7 +152,7 @@
 <script src="{{ asset('js/leaflet-search.js') }}" type="text/javascript"></script>
 <script>
 
-    var mymap = new L.map('mapid').setView([14.2917802,120.9115148], 11);
+    var mymap = new L.map('mapid').setView([{{ $data->Latitude }}, {{ $data->Longitude }}], 16);
 
     new L.Control.Search({
         url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
@@ -189,9 +192,11 @@
 
     mymap.on('click', onMapClick);
 
-//    L.marker([14.19480, 120.88169]).addTo(mymap);
-
+    var name = $("#dormName").val();
     var marker;
+    marker = L.marker([{{ $data->Latitude }}, {{ $data->Longitude }}]).addTo(mymap).bindPopup(name)
+        .openPopup();
+
 
     $(document).on('click', '#dropPin', function() {
         var name = $("#dormName").val();

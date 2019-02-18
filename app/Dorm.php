@@ -39,7 +39,8 @@ class Dorm extends Model
         'LandLineNumber',
         'Owner',
         'BusinessPermit',
-        'BusinessPermitImage'
+        'BusinessPermitImage',
+        'Amenities'
     ];
 
     public function getOwner() {

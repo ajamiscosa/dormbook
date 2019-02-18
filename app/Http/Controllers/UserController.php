@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -115,5 +116,61 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function showLoginForm() {
+        return view('login');
+    }
+
+    public function doLoginProcess(Request $request) {
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+            'Username'=>'required|min:3',
+            'Password'=>'required|min:4'
+        ],
+            [
+                'Username.required'=>'Username is Required',
+                'Username.min'=>'Username should be at least 3 characters.',
+                'Password.required'=>'Password is Required',
+                'Password.min'=>'Password should be at least 7 characters.'
+            ]
+        );
+
+        if($validator->passes()){
+            $credentials = $request->only('Username', 'Password');
+
+            $user = $credentials['Username'];
+            $pass = $credentials['Password'];
+
+            $account = User::where('Username','=',$user)->first();
+
+            if($account) {
+                if($account->Password == $pass) {
+                    Auth::login($account);
+                    if(session('link')) {
+                        return redirect(session('link'));
+                    }
+                    return redirect()->to('/');
+                }
+                else {
+                    $validator->errors()->add('Password', 'Password is Incorrect');
+                    return redirect()->back()->withErrors($validator);
+                }
+            }
+            else {
+                $validator->errors()->add('Username', 'User does not exist');
+                return redirect()->back()->withErrors($validator);
+            }
+        }
+        else {
+            return redirect()->back()->withErrors($validator);
+        }
+    }
+
+    public function doLogoutProcess() {
+        if(Auth::check()) {
+            Auth::logout();
+            session()->flush();
+            return redirect()->to('/login');
+        }
     }
 }

@@ -25,7 +25,7 @@
                                         <th class="sorting">Username</th>
                                         <th class="sorting">Email Address</th>
                                         <th class="sorting">Dormitory</th>
-                                        <th class="disabled-sorting">Actions</th>
+                                        <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
@@ -34,7 +34,7 @@
                                         <th class="sorting">Username</th>
                                         <th class="sorting">Email Address</th>
                                         <th class="sorting">Dormitory</th>
-                                        <th class="disabled-sorting">Actions</th>
+                                        <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                     </tfoot>
                                     <tbody>
@@ -66,7 +66,7 @@
                 { data:"Username" },
                 { data:"EmailAddress" },
                 { data:"Dormitory" },
-                { data: null }
+                { data: null, class: 'text-right'}
             ],
             columnDefs: [
                 {
@@ -79,8 +79,9 @@
                 },
                 {
                     render: function (data, type, row) {
-                        return '<a href="/dorm/update/'+ID+'-'+Name+'" class="btn btn-warning btn-link btn-icon btn-sm edit"><i class="fa fa-edit"></i></a>' +
-                               '<a href="/dorm/delete/'+ID+'-'+Name+'" class="btn btn-danger btn-link btn-icon btn-sm remove"><i class="fa fa-times"></i></a>';
+                        var username = row['Username'];
+                        return '<a href="/user/update/'+username+'" class="btn btn-warning btn-link btn-icon btn-sm edit"><i class="fa fa-edit"></i></a>' +
+                               '<a href="/user/delete/'+username+'" class="btn btn-danger btn-link btn-icon btn-sm remove"><i class="fa fa-times"></i></a>';
                     },
                     targets: 4
                 }

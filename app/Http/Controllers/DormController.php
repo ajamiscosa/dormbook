@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class DormController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -79,9 +84,12 @@ class DormController extends Controller
      * @param  \App\Dorm  $Dorm
      * @return \Illuminate\Http\Response
      */
-    public function showUpdateForm(Dorm $Dorm)
+    public function showUpdateForm($Dorm)
     {
-        //
+        $temp = explode('-',$Dorm);
+        $dorm = new Dorm();
+        $dorm = $dorm->where('ID','=',$temp[0])->first();
+        return view('dorms.update', ['data'=>$dorm]);
     }
 
     /**
@@ -91,9 +99,26 @@ class DormController extends Controller
      * @param  \App\Dorm  $Dorm
      * @return \Illuminate\Http\Response
      */
-    public function doUpdateProcess(Request $request, Dorm $Dorm)
+    public function doUpdateProcess(Request $request, Dorm $dorm)
     {
-        //
+        $temp = json_decode('['.implode(',',$request->Amenities).']',true);
+        $amenities = json_encode($temp);
+
+        $dorm->AddressLine1 = $request->AddressLine1;
+        $dorm->AddressLine2 = $request->AddressLine2;
+        $dorm->City = $request->City;
+        $dorm->Zip = $request->Zip;
+        $dorm->Rate = $request->Rate;
+        $dorm->Rooms = $request->Rooms;
+        $dorm->MobileNumber = $request->MobileNumber;
+        $dorm->LandLineNumber = $request->LandLineNumber;
+        $dorm->BusinessPermit = $request->BusinessPermit;
+        $dorm->Latitude = $request->Latitude;
+        $dorm->Longitude = $request->Longitude;
+        $dorm->Amenities = $amenities;
+        $dorm->save();
+
+        return redirect()->to('/dorm');
     }
 
     /**
@@ -140,5 +165,13 @@ class DormController extends Controller
     public function destroy(Dorm $dorm)
     {
         //
+    }
+
+    public function showSearchForm() {
+        return view('search');
+    }
+
+    public function testAmenities(Request $request) {
+        dd($request);
     }
 }
