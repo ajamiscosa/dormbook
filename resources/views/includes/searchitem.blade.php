@@ -2,7 +2,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-4">
-            <img  id="prevpic" src="../images/bg/bruno-abatti.jpg">
+            <img  id="prevpic" src='{{ asset("uploads/{$data->ID}/1.jpg") }}'>
           </div>
           <div class="col-md-8">
               <div id="accordion" role="tablist" aria-multiselectable="true" class="card-collapse">
