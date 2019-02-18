@@ -234,6 +234,6 @@ class DormController extends Controller
                 array_push($data, $dorm);
             }
         }
-        return view('search',['data'=>$data]);
+        return view('search',['data'=>$data,'search'=>$search]);
     }
 }

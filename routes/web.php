@@ -16,6 +16,9 @@ Route::get('/', function () {
 });
 
 Route::get('/admin', function(){
+    if(!auth()->check()) {
+        return redirect()->to('/login');
+    }
     return view('admin.index');
 });
 

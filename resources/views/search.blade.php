@@ -39,7 +39,7 @@
                 <i class="nc-icon nc-single-02"></i>
               </span>
             </div>
-            <input type="text" class="form-control" placeholder="Search" name="Search">
+            <input type="text" class="form-control" placeholder="Search" name="Search" value="{{ isset($search)?$search:"" }}">
         </div>
 
         <button type="submit" class="btn btn--primary horus-btn-search" key="searchButton">
