@@ -6,7 +6,7 @@
           </div>
           <div class="col-md-8">
               <div id="accordion" role="tablist" aria-multiselectable="true" class="card-collapse">
-                <h3 class="card-title">Green Sun - The Hotel</h3>
+                <h3 class="card-title">{{ $data->Name }}</h3>
                 <div class="card card-plain">
                   <div class="card-header" role="tab" id="headingOne">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree" rel="#home">
