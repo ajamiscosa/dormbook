@@ -75,7 +75,7 @@ Route::get('/dorm/{dormname}/facilities/data', 'FacilityController@getAlldorm/fa
 Route::get('/testmap', function() {
    $config['center'] = 'Silang, Cavite';
    $config['zoom'] = 14;
-   $config['map_height'] = '500px';
+   $config['map_height'] = '300px';
    $config['scrollwheel'] = false;
 
    \FarhanWazir\GoogleMaps\Facades\GMapsFacade::initialize($config);

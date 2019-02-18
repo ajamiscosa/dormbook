@@ -226,18 +226,20 @@ class DormController extends Controller
         $search = strtolower($request->Search);
         $data = array();
         $dorms = Dorm::all();
-        foreach($dorms as $dorm) {
-            if (strpos(strtolower($dorm->AddressLine1), $search) !== false) {
-                array_push($data, $dorm);
-            }
-            else if (strpos(strtolower($dorm->AddressLine2), $search) !== false) {
-                array_push($data, $dorm);
-            }
-            else if (strpos(strtolower($dorm->City), $search) !== false) {
-                array_push($data, $dorm);
-            }
-            else if (strpos(strtolower($dorm->Name), $search) !== false) {
-                array_push($data, $dorm);
+        if(strlen($search)>0) {
+            foreach($dorms as $dorm) {
+                if (strpos(strtolower($dorm->AddressLine1), $search) !== false) {
+                    array_push($data, $dorm);
+                }
+                else if (strpos(strtolower($dorm->AddressLine2), $search) !== false) {
+                    array_push($data, $dorm);
+                }
+                else if (strpos(strtolower($dorm->City), $search) !== false) {
+                    array_push($data, $dorm);
+                }
+                else if (strpos(strtolower($dorm->Name), $search) !== false) {
+                    array_push($data, $dorm);
+                }
             }
         }
         return view('search',['data'=>$data,'search'=>$search]);

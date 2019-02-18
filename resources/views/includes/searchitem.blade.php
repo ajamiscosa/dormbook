@@ -9,8 +9,8 @@
                 <h3 class="card-title">{{ $data->Name }}</h3>
                 <div class="card card-plain">
                   <div class="card-header" role="tab" id="headingOne">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree" rel="#home">
-                      Collapsible Group Item #1
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree{{$data->ID}}" aria-expanded="true" aria-controls="collapseThree{{$data->ID}}" rel="#home">
+                      {{ $data->AddressLine1 }}, {{ $data->AddressLine2 }}, {{ $data->City }}, Cavite
                       <i class="nc-icon nc-minimal-down"></i>
                     </a>
                   </div>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="card card-plain">
                   <div class="card-header" role="tab" id="headingTwo">
-                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseTwo" rel="#profile">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree{{$data->ID}}" aria-expanded="false" aria-controls="collapseTwo" rel="#profile">
                       Collapsible Group Item #2
                       <i class="nc-icon nc-minimal-down"></i>
                     </a>
@@ -35,12 +35,12 @@
                 </div>
                 <div class="card card-plain">
                   <div class="card-header" role="tab" id="headingThree">
-                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" rel="#messages">
-                      Collapsible Group Item #3
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree{{$data->ID}}" aria-expanded="false" aria-controls="collapseThree{{$data->ID}}" rel="#messages">
+                      {{ $data->Rate }}
                       <i class="nc-icon nc-minimal-down"></i>
                     </a>
                   </div>
-                  <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                  <div id="collapseThree{{$data->ID}}" class="collapse" role="tabpanel" aria-labelledby="headingThree">
                     <div class="card-body">
                       
                       <div class="nav-tabs-navigation">
@@ -53,7 +53,7 @@
                               <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-expanded="false">Profile</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" data-toggle="tab" href="#messages" role="tab" aria-expanded="false">Messages</a>
+                              <a class="nav-link" data-toggle="tab" href="#photos" role="tab" aria-expanded="false">Photos</a>
                             </li>
                           </ul>
                         </div>
@@ -65,8 +65,29 @@
                         <div class="tab-pane" id="profile" role="tabpanel" aria-expanded="false">
                           <p>Here is your profile.</p>
                         </div>
-                        <div class="tab-pane" id="messages" role="tabpanel" aria-expanded="false">
-                          <p>Here are your messages.</p>
+                        <div class="tab-pane" id="photos" role="tabpanel" aria-expanded="false">
+                          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                              <div class="carousel-item active">
+                                <img src='{{ asset("uploads/{$data->ID}/1.jpg") }}' class="d-block w-100" alt="...">
+                              </div>
+                              @for($i=1;$i<10;$i++)
+                                @if(file_exists( public_path()."/uploads/{$data->ID}/{$i}.jpg"))
+                                  <div class="carousel-item">
+                                    <img src='{{ asset("uploads/{$data->ID}/{$i}.jpg") }}' class="d-block w-100" alt="...">
+                                  </div>
+                                @endif
+                              @endfor
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                          </div>
                         </div>
                       </div>
 

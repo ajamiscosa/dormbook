@@ -7,12 +7,14 @@
     <meta name="author" content="">
     <link rel="icon" href="https://getbootstrap.com/favicon.ico">
 
-    <title>Blog Template for Bootstrap</title>
+    <title>dormbook - cvsu interactive dormitory listing</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/blog.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/paper-dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/leaflet.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/leaflet-search.css') }}"/>
 
     <!-- Custom styles for this template -->
 </head>
@@ -47,12 +49,14 @@
                                        <span class="horus-btn-search__label">Search</span>
                                        </span>
         </button>
+
+        <a href="#" class="btn btn--primary horus-btn-search pull-right" id="toggleMap">View Map
+        </a>
     </div>
     </form>
 </div>
 <main role="main" class="container" style="width: 640px;">
-
-
+<div id="listDiv">
 
     @if(isset($data))
         @foreach($data as $entry)
@@ -60,9 +64,19 @@
         @endforeach
     @endif
 
+</div>
+
+<div id="mapdiv">
+    <div class="col-lg-12">
+        <div id="mapid" style="width: 100%; height: 350px;">
+
+        </div>
+    </div>
+</div>
+
+
 
 </main><!-- /.container -->
-
 <footer class="blog-footer">
     <div class="col-lg-12 text-center">
         <img src="images/dormbook.png"/>
@@ -98,6 +112,63 @@
             }
         });
       });
+</script>
+
+<script>
+
+</script>
+<script src="{{ asset('js/leaflet.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/leaflet-search.js') }}" type="text/javascript"></script>
+<script>
+
+    var mymap = new L.map('mapid').setView([14.194331, 120.876732], 14);
+
+    new L.Control.Search({
+        url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
+        jsonpParam: 'json_callback',
+        propertyName: 'display_name',
+        propertyLoc: ['lat','lon'],
+//        marker: L.circleMarker([0,0],{radius:30}),
+        autoCollapse: true,
+        autoType: false,
+        minLength: 2
+    }).addTo(mymap);
+
+    var tileLayer = new L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+        maxZoom: 18,
+        minZoom: 9,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        id: 'mapbox.streets'
+    }).addTo(mymap);
+
+
+    var popup = L.popup();
+
+    var lat = 0;
+    var lng = 0;
+
+
+    @if(isset($data))
+        @foreach($data as $entry)
+
+        var name = '{{ $entry->Name }}';
+        console.log(name);
+        var marker;
+        marker = L.marker([{{ $entry->Latitude }}, {{ $entry->Longitude }}]).addTo(mymap).bindPopup(name)
+            .openPopup();
+
+        @endforeach
+    @endif
+
+
+$('#mapdiv').hide();
+
+$('#toggleMap').on('click', function() {
+        $('#listDiv').hide();
+        $('#mapdiv').show();
+    });
 </script>
 
 
