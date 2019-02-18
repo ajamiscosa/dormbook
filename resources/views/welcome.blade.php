@@ -1,70 +1,162 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta name="google-site-verification" content="exLc2jIt56S6YHs_Rjiv5vGZMQ2GEdTH-3gut9HbU0k" />
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<!-- saved from url=(0048)https://getbootstrap.com/docs/4.0/examples/blog/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <title>Laravel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://getbootstrap.com/favicon.ico">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <title>Blog Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/blog.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/paper-dashboard.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+</head>
+
+<body style=" background-color: #f4f3ef;">
+
+<div class="container" style="width: 640px;">
+    <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+            <div class="col-lg-12 text-center">
+                <img src="images/dormbook.png"/>
+
+            </div>
+        </div>
+    </header>
+
+    <br/>
+
+    <div class="container">
+      @if (count($errors) > 0)
+      <div class="alert alert-danger">
+        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+        <ul>
+          @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+      @endif
+
+        @if(session('success'))
+        <div class="alert alert-success">
+          {{ session('success') }}
+        </div> 
+        @endif
+
+    <h3 class="jumbotron">Laravel Multiple File Upload</h3>
+<form method="post" action="{{url('sea')}}" enctype="multipart/form-data">
+  {{csrf_field()}}
+
+        <div class="input-group control-group increment" >
+          <input type="file" name="filename[]" class="form-control">
+          <div class="input-group-btn"> 
+            <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add More</button>
+          </div>
+        </div>
+        <div class="clone hide">
+          <div class="control-group input-group" style="margin-top:10px">
+            <input type="file" name="filename[]" class="form-control">
+            <div class="input-group-btn"> 
+              <button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="margin-top:10px">Submit</button>
+
+  </form>        
+  </div>
 
 
-        {{--{!! $map['js'] !!}--}}
-        {{--<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyD77buv2NVIN7gBAnH_Nr-OHG6nhj-t-Nk"></script>--}}
-        {{--<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyCRELnOMmeXiIBmUl50GT4AZNOPxmKldSY&sensor=true&v=3"></script>--}}
-        {{--<script type="text/javascript">--}}
-            {{--//<![CDATA[ var map;--}}
-            {{--// Global declaration of the map--}}
-            {{--var lat_longs_map = new Array();--}}
-            {{--var markers_map = new Array();--}}
-            {{--var iw_map;--}}
-            {{--var geocoder;--}}
-            {{--// Global declaration of geocoder for reverser location from latLng--}}
-            {{--function initialize_map() {--}}
-                {{--var myLatlng = new google.maps.LatLng(14.1920384, 120.8728615);--}}
-                {{--iw_map = new google.maps.InfoWindow();--}}
-                {{--var myOptions = { zoom: 14, center: myLatlng, mapTypeId: google.maps.MapTypeId.ROADMAP, scrollwheel: false };--}}
-                {{--map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);geocoder = new google.maps.Geocoder;--}}
-            {{--}--}}
-            {{--function onstaged_map(){}--}}
-            {{--function createMarker_map(markerOptions) { var marker = new google.maps.Marker(markerOptions); markers_map.push(marker); lat_longs_map.push(marker.getPosition()); return marker; }--}}
-            {{--google.maps.event.addDomListener(window, "load", initialize_map);--}}
-            {{--function reverseGeocode(latlng, callback, obj) {--}}
-{{--//callback must be function //--}}
-                {{--var latlng = {lat: parseFloat(latitude), lng: parseFloat(longitude)};--}}
-                {{--geocoder.geocode({'location': latlng}, function(results, status) { if (status === google.maps.GeocoderStatus.OK) { if (results[1]) { callback(200, results[1].formatted_address, obj ); } else { callback(404, "Not found.", obj); } } else { callback(400, "Something wrong went.", obj ); } }); }--}}
-            {{--//]]>--}}
-        {{--</script>--}}
+    <form method="post" action="/search">
+        {{ csrf_field() }}
+    <div class="form-group">
+        <div class="input-group" style="background-color: white;">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="nc-icon nc-single-02"></i>
+              </span>
+            </div>
+            <input type="text" class="form-control" placeholder="Search" name="Search">
+        </div>
 
-        <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css">
-        <style>
-            .map {
-                height: 100%;
-                width: 100%;
+        <button type="submit" class="btn btn--primary horus-btn-search" key="searchButton">
+                                       <span class="horus-btn-search__icon icon-ic icon-contain icon-bg-icn_search_light">
+                                       <span class="horus-btn-search__label">Search</span>
+                                       </span>
+        </button>
+    </div>
+    </form>
+</div>
+<main role="main" class="container" style="width: 640px;">
+
+
+
+    @if(isset($data))
+        @foreach($data as $entry)
+            @include('includes.searchitem', ['data'=>$entry])
+        @endforeach
+    @endif
+
+
+</main><!-- /.container -->
+
+<footer class="blog-footer">
+    <div class="col-lg-12 text-center">
+        <img src="images/dormbook.png"/>
+    </div>
+    <p>
+        Copyright ® 2019. dormbook
+    </p>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/perfect-scrollbar.jquery.min.js"></script>
+<script src="js/paper-dashboard.min.js"></script>
+<script src="js/holder.min.js"></script>
+<script>
+    Holder.addTheme('thumb', {
+        bg: '#55595c',
+        fg: '#eceeef',
+        text: 'Thumbnail'
+    });
+    //Era
+      $(document).on('click','.collapsed', function(){
+        var collapseItem = $(this).attr('rel');
+        $('.nav-tabs').find('a').each(function() {
+            $(this).removeClass('active');
+            if($(this).attr('href') == collapseItem){
+              $(this).tab('show');
             }
-        </style>
-        <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
-        <title>OpenLayers example</title>
-    </head>
-    <body>
-    <div id="map" class="map"></div>
-    <script type="text/javascript">
-        var map = new ol.Map({
-            target: 'map',
-            layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM()
-                })
-            ],
-            view: new ol.View({
-                center: ol.proj.fromLonLat([120.8728615, 14.1920384]),
-                zoom: 15
-            })
         });
-    </script>
-    </body>
+      });
 
-</html>
+    //file upload
+    $(document).ready(function() {
+
+      $(".btn-success").click(function(){ 
+          var html = $(".clone").html();
+          $(".increment").after(html);
+      });
+
+      $("body").on("click",".btn-danger",function(){ 
+          $(this).parents(".control-group").remove();
+      });
+
+    });
+</script>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="250" viewBox="0 0 200 250" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs><style type="text/css"></style></defs><text x="0" y="13" style="font-weight:bold;font-size:13pt;font-family:Arial, Helvetica, Open Sans, sans-serif">Thumbnail</text></svg></body></html>

@@ -23,6 +23,8 @@ Route::get('/admin', function(){
 });
 
 
+Route::post('/sea','DormController@doUpload');
+Route::get('/upload','DormController@meUpload');
 
 Route::get('/login','UserController@showLoginForm')->name('login');
 Route::post('/login','UserController@doLoginProcess');

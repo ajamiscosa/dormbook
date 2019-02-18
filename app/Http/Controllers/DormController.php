@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Dorm;
 use App\User;
+use App\Image;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
@@ -75,6 +76,11 @@ class DormController extends Controller
         $dorm->Longitude = $request->Longitude;
         $dorm->Amenities = $amenities;
         $dorm->save();
+
+        $this->validate($request, [
+        'filename' => 'required',
+        'filename.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
 
         return redirect()->to('/dorm');
     }
@@ -235,5 +241,43 @@ class DormController extends Controller
             }
         }
         return view('search',['data'=>$data,'search'=>$search]);
+    }
+
+    public function meUpload()
+    {
+        return view('welcome');
+    }
+
+    public function doUpload(Request $request) 
+    {
+        // $path = $request->file('avatar')->store('avatars');
+
+        // return $path;
+
+        $this->validate($request, [
+        'filename' => 'required',
+        'filename.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        if($request->hasfile('filename'))
+         {
+
+            foreach($request->file('filename') as $image)
+            {
+                $name=$image->getClientOriginalName();
+                $image->move(public_path().'/images/', $name);  
+                $data[] = $name;  
+            }
+         }
+
+         $image= new Image();
+         $image->Path=json_encode($data);
+         $image->Type='j';
+         $image->ReferenceID=1;
+         // dd($image->Path);
+        
+        $image->save();
+
+        return back()->with('success', 'Your images has been successfully');
     }
 }
