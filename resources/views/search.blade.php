@@ -30,6 +30,8 @@
     </header>
 
     <br/>
+    <form method="post" action="/search">
+        {{ csrf_field() }}
     <div class="form-group">
         <div class="input-group" style="background-color: white;">
             <div class="input-group-prepend">
@@ -37,24 +39,26 @@
                 <i class="nc-icon nc-single-02"></i>
               </span>
             </div>
-            <input type="text" class="form-control" placeholder="Search">
+            <input type="text" class="form-control" placeholder="Search" name="Search">
         </div>
 
-        <button class="btn btn--primary horus-btn-search" key="searchButton">
+        <button type="submit" class="btn btn--primary horus-btn-search" key="searchButton">
                                        <span class="horus-btn-search__icon icon-ic icon-contain icon-bg-icn_search_light">
                                        <span class="horus-btn-search__label">Search</span>
                                        </span>
         </button>
     </div>
+    </form>
 </div>
 <main role="main" class="container" style="width: 640px;">
 
-@include('includes.searchitem')
-@include('includes.searchitem')
-@include('includes.searchitem')
-@include('includes.searchitem')
-@include('includes.searchitem')
-@include('includes.searchitem')
+
+
+    @if(isset($data))
+        @foreach($data as $entry)
+            @include('includes.searchitem', ['data'=>$entry])
+        @endforeach
+    @endif
 
 
 </main><!-- /.container -->

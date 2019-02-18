@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Dorm;
 use App\User;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 
 class DormController extends Controller
 {
     function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('showSearchForm', 'doSearchProcess');
     }
 
     /**
@@ -54,6 +56,9 @@ class DormController extends Controller
         $user->Name = $request->Owner;
         $user->save();
 
+        $temp = json_decode('['.implode(',',$request->Amenities).']',true);
+        $amenities = json_encode($temp);
+
         $dorm = new Dorm();
         $dorm->Name = $request->Name;
         $dorm->Owner = $user->ID;
@@ -68,6 +73,7 @@ class DormController extends Controller
         $dorm->BusinessPermit = $request->BusinessPermit;
         $dorm->Latitude = $request->Latitude;
         $dorm->Longitude = $request->Longitude;
+        $dorm->Amenities = $amenities;
         $dorm->save();
 
         return redirect()->to('/dorm');
@@ -207,5 +213,27 @@ class DormController extends Controller
         $data['initialPreviewThumbTags'] = [];
         $data['append'] = true;
         return response()->json($data);
+    }
+
+    public function doSearchProcess(Request $request)
+    {
+        $search = strtolower($request->Search);
+        $data = array();
+        $dorms = Dorm::all();
+        foreach($dorms as $dorm) {
+            if (strpos(strtolower($dorm->AddressLine1), $search) !== false) {
+                array_push($data, $dorm);
+            }
+            else if (strpos(strtolower($dorm->AddressLine2), $search) !== false) {
+                array_push($data, $dorm);
+            }
+            else if (strpos(strtolower($dorm->City), $search) !== false) {
+                array_push($data, $dorm);
+            }
+            else if (strpos(strtolower($dorm->Name), $search) !== false) {
+                array_push($data, $dorm);
+            }
+        }
+        return view('search',['data'=>$data]);
     }
 }
