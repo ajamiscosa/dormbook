@@ -49,12 +49,12 @@
 </div>
 <main role="main" class="container" style="width: 640px;">
 
-@include('includes.searchitem')
-@include('includes.searchitem')
-@include('includes.searchitem')
-@include('includes.searchitem')
-@include('includes.searchitem')
-@include('includes.searchitem')
+{{--@include('includes.searchitem')--}}
+{{--@include('includes.searchitem')--}}
+{{--@include('includes.searchitem')--}}
+{{--@include('includes.searchitem')--}}
+{{--@include('includes.searchitem')--}}
+{{--@include('includes.searchitem')--}}
 
 
 </main><!-- /.container -->

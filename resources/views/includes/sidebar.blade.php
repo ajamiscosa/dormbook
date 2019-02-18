@@ -4,12 +4,12 @@
       Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
   -->
     <div class="logo">
-        <a href="http://www.creative-tim.com/" class="simple-text logo-mini">
+        <a href="" class="simple-text logo-mini">
             <div class="logo-image-small">
                 <img src="{{ asset('images/logo-small.png') }}">
             </div>
         </a>
-        <a href="http://www.creative-tim.com/" class="simple-text logo-normal">
+        <a href="" class="simple-text logo-normal">
             dormbook
             <!-- <div class="logo-image-big">
               <img src="../assets/img/logo-big.png">
@@ -24,13 +24,19 @@
             <div class="info">
                 <a data-toggle="collapse" href="#collapseExample" class="collapsed">
                 <span>
-                    Chet Faker
+                    {{ auth()->user()->Name }}
                     <b class="caret"></b>
                 </span>
                 </a>
                 <div class="clearfix"></div>
                 <div class="collapse" id="collapseExample">
                     <ul class="nav">
+                        <li>
+                            <a href="/changepw">
+                                <span class="sidebar-mini-icon"><i class="fa fa-key"></i></span>
+                                <span class="sidebar-normal">Change Password</span>
+                            </a>
+                        </li>
                         <li>
                             <a href="/logout">
                                 <span class="sidebar-mini-icon"><i class="fa fa-sign-out"></i></span>
@@ -54,18 +60,21 @@
                     <p>Dorms</p>
                 </a>
             </li>
-            <li class="nav-item" id="user">
-                <a href="/user">
-                    <i class="nc-icon nc-single-02"></i>
-                    <p>User Accounts</p>
-                </a>
-            </li>
-            <li class="nav-item" id="setting">
-                <a href="/setting">
-                    <i class="nc-icon nc-settings"></i>
-                    <p>Settings</p>
-                </a>
-            </li>
+            @if(auth()->user()->isAdministrator())
+
+                <li class="nav-item" id="user">
+                    <a href="/user">
+                        <i class="nc-icon nc-single-02"></i>
+                        <p>User Accounts</p>
+                    </a>
+                </li>
+                <li class="nav-item" id="setting">
+                    <a href="/setting">
+                        <i class="nc-icon nc-settings"></i>
+                        <p>Settings</p>
+                    </a>
+                </li>
+            @endif
         </ul>
         <div class="ps-scrollbar-x-rail" style="width: 260px; left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 258px;"></div></div>
         <div class="ps-scrollbar-y-rail" style="top: 0px; right: 0px; height: 814px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 430px;"></div></div></div>

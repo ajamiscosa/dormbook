@@ -20,7 +20,13 @@ class DormController extends Controller
      */
     public function index()
     {
-        return view('dorms.index');
+        if(auth()->user()->isAdministrator()) {
+            return view('dorms.index');
+        }
+        else {
+            $dorm = Dorm::where('Owner','=',auth()->user()->ID)->first();
+            return view('dorms.show', ['data'=>$dorm]);
+        }
     }
 
     /**
@@ -173,5 +179,33 @@ class DormController extends Controller
 
     public function testAmenities(Request $request) {
         dd($request);
+    }
+
+    public function uploadImage(Request $request)
+    {
+
+        $this->validate($request, [
+            'Images' => 'required|image|mimes:jpeg,png,jpg,bmp',
+        ]);
+
+        if ($request->hasFile('Images')) {
+            $image = $request->file('Images');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $name);
+            $this->save();
+
+//            return back()->with('success','Image Upload successfully');
+        }
+
+
+        $data = array();
+        $data['error'] = "";
+        $data['errorkeys'] = [];
+        $data['initialPreview'] = [];
+        $data['initialPreviewConfig'] = [];
+        $data['initialPreviewThumbTags'] = [];
+        $data['append'] = true;
+        return response()->json($data);
     }
 }
