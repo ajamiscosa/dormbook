@@ -22,6 +22,13 @@ Route::get('/admin', function(){
     return view('admin.index');
 });
 
+Route::get('search', 'DormController@showSearchForm')->name('search');
+Route::get('autocomplete', 'DormController@autocomplete')->name('autocomplete');
+
+
+Route::get('autocomplete-search',array('as'=>'autocomplete.search','uses'=>'DormController@showSearchForm'));
+Route::get('autocomplete-ajax',array('as'=>'autocomplete.ajax','uses'=>'DormController@ajaxData'));
+
 
 Route::post('/sea','DormController@doUpload');
 Route::get('/upload','DormController@meUpload');

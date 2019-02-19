@@ -15,11 +15,28 @@
     <link href="css/paper-dashboard.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
 </head>
 
 <body style=" background-color: #f4f3ef;">
 
 <div class="container" style="width: 640px;">
+  <input id="search_text" class="typeahead form-control" type="text">
+   
+    <script type="text/javascript">
+
+        var url = "{{ route('autocomplete.ajax') }}";
+        $('#search_text').typeahead({
+            source:  function (query, process) {
+            return $.get(url, { query: query }, function (data) {
+                    return process(data);
+                });
+            }
+        });
+    </script>
+
     <header class="blog-header py-3">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="col-lg-12 text-center">

@@ -199,28 +199,49 @@ class DormController extends Controller
     {
 
         $this->validate($request, [
-            'Images' => 'required|image|mimes:jpeg,png,jpg,bmp',
+            'Images' => 'required',
+            'Images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        if ($request->hasFile('Images')) {
-            $image = $request->file('Images');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images');
-            $image->move($destinationPath, $name);
-            $this->save();
+//         if ($request->hasFile('Images')) {
+//             $image = $request->file('Images');
+//             $name = time().'.'.$image->getClientOriginalExtension();
+//             $destinationPath = public_path('/images');
+//             $image->move($destinationPath, $name);
+//             $this->save();
 
-//            return back()->with('success','Image Upload successfully');
-        }
+// //            return back()->with('success','Image Upload successfully');
+//         }
+
+        if($request->hasfile('Images'))
+         {
+
+            foreach($request->file('Images') as $image)
+            {
+                $name=$image->getClientOriginalName();
+                $image->move(public_path().'/images/', $name);  
+                $data[] = $name;  
+            }
+         }
+
+         $image= new Image();
+         $image->Path=json_encode($data);
+         $image->Type='j';
+         $image->ReferenceID=1;
+         // dd($image->Path);
+        
+        $image->save();
+        return back()->with('success', 'Your images has been successfully');
 
 
-        $data = array();
-        $data['error'] = "";
-        $data['errorkeys'] = [];
-        $data['initialPreview'] = [];
-        $data['initialPreviewConfig'] = [];
-        $data['initialPreviewThumbTags'] = [];
-        $data['append'] = true;
-        return response()->json($data);
+        // $data = array();
+        // $data['error'] = "";
+        // $data['errorkeys'] = [];
+        // $data['initialPreview'] = [];
+        // $data['initialPreviewConfig'] = [];
+        // $data['initialPreviewThumbTags'] = [];
+        // $data['append'] = true;
+        // return response()->json($data);
     }
 
     public function doSearchProcess(Request $request)
@@ -258,9 +279,9 @@ class DormController extends Controller
 
         // return $path;
 
-        $this->validate($request, [
-        'filename' => 'required',
-        'filename.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            $this->validate($request, [
+            'filename' => 'required',
+            'filename.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if($request->hasfile('filename'))
@@ -283,5 +304,14 @@ class DormController extends Controller
         $image->save();
 
         return back()->with('success', 'Your images has been successfully');
+    }
+
+    public function ajaxData(Request $request)
+    {
+        $query = $request->get('query','');        
+
+        $posts = Dorm::where('Name','LIKE','%'.$query.'%')->get();        
+
+        return response()->json($posts);
     }
 }
