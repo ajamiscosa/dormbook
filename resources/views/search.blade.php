@@ -35,10 +35,17 @@
             color: #454F59;
             text-decoration: none; /* no underline */
         }
+        .bg {
+            background-image: url('images/bg/bg.png');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
     </style>
 </head>
 
-<body style=" background-color: #f4f3ef; " >
+<body style=" background-color: #f4f3ef; " class="bg">
 
 <div class="container" style="width: 640px;">
     <header class="blog-header py-3">

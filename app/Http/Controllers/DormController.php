@@ -93,9 +93,12 @@ class DormController extends Controller
      * @param  \App\Dorm  $Dorm
      * @return \Illuminate\Http\Response
      */
-    public function showDormInformation(Dorm $Dorm)
+    public function showDormInformation($Dorm)
     {
-        //
+        $temp = explode('-',$Dorm);
+        $dorm = new Dorm();
+        $dorm = $dorm->where('ID','=',$temp[0])->first();
+        return view('dorms.show', ['data'=>$dorm]);
     }
 
     /**
@@ -290,7 +293,9 @@ class DormController extends Controller
             foreach($request->file('filename') as $image)
             {
                 $name=$image->getClientOriginalName();
-                $image->move(public_path().'/uploads/'.$dorm.'/', rand(20).".".$image->getClientOriginalExtension());
+                $count = count(File::allFiles(public_path()."/uploads/2"));
+                $count++;
+                $image->move(public_path().'/uploads/'.$dorm.'/', $count.".".$image->getClientOriginalExtension());
                 $data[] = $name;  
             }
          }

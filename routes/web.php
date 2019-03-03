@@ -91,3 +91,8 @@ Route::get('/testmap', function() {
 
    return view('welcome')->with('map',$map);
 });
+
+
+Route::get('/testdir', function(){
+    dd(File::allFiles(public_path()."/uploads/2"));
+});

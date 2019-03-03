@@ -23,6 +23,15 @@
     <link href="{{ asset('css/demo.css') }}" rel="stylesheet" />
     <!-- Extra details for Live View on GitHub Pages -->
     <!-- Google Tag Manager -->
+    <style>
+        .bg {
+            background-image: url('images/bg/bg.png');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
 </head>
 
 <body class="login-page">
@@ -34,8 +43,8 @@
 <!-- End Google Tag Manager (noscript) -->
 <!-- Navbar -->
 <!-- End Navbar -->
-<div class="wrapper wrapper-full-page" style="border: 1px solid #4C4C4C;">
-    <div class="full-page login-page section-image" filter-color="black" data-image="">
+<div class="wrapper wrapper-full-page bg" style="border: 1px solid #4C4C4C;">
+    <div class="full-page login-page section-image" filter-color="black" data-image="{{ asset('images/bg/bg.png') }}">
         <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
         <div class="content">
             <div class="container">
@@ -114,9 +123,8 @@
 <!--  Plugin for the Bootstrap Table -->
 <script src="{{ asset('js/nouislider.min.js') }}"></script>
 <!--  Google Maps Plugin    -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Yno10-YTnLjjn_Vtk0V8cdcY5lC4plU"></script>
 <!-- Place this tag in your head or just before your close body tag. -->
-<script async defer src="https://buttons.github.io/buttons.js') }}"></script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Chart JS -->
 <script src="{{ asset('js/chartjs.min.js') }}"></script>
 <!--  Notifications Plugin    -->
